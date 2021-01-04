@@ -10,13 +10,15 @@ int main ()
 {
 Trie t;
 FILE *fptr=fopen("input.txt","r");
-buildtree(fptr,t);
+buildtreeInput(fptr,t);
 // done building tree.
 
 // now i print the tree.
 for (int i = 0; i < 26; i++)
 {
+    if (t.children[i]=!NULL){// if there a child.
     Printup(t.children[i]);
+    }
 }
 
 

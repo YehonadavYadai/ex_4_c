@@ -1,21 +1,23 @@
+#define NUM_LETTERS ((int)26)
 typedef enum
 {
     FALSE = 0,
     TRUE = 1
-} boolean; // Quich boolean Struct
+} boolean;// Quich boolean Struct
 
 typedef struct node
 {
-    boolean open = FALSE;
-    boolean dad = FALSE;
+    boolean open;
+    boolean dad ;
     char *word;
     long unsigned int count;
-    struct node *children[26]; // evrey node have array of nodes "children"
+    struct node* children[NUM_LETTERS]; // evrey node have pointers to the children
 } node;
 
 typedef struct Trie
 {
-    struct node* children[26];
+    node* children[NUM_LETTERS];
+
 } Trie;
 
 
@@ -23,7 +25,9 @@ char* wordToLower(char* str,int length);
    
 char*getword(FILE *fp);
    
-void buildtree(FILE *fp, Trie t);
+void buildtreeFile(FILE *fp, Trie t);
+
+void buildtreeInput(FILE *fp, Trie t);
 
 int convert(char c);
 
