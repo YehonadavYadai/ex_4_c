@@ -34,7 +34,9 @@ int convert(char c);
 void insert(Trie t, char *word);
 
 void Printup(node* current);
-void inserta(Trie t, char *word):
+
+void inserta(Trie t, char *word);
+
 void buildtreeInput(FILE *fp, Trie t);
 
 

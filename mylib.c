@@ -64,15 +64,31 @@ char *getword(FILE *fp)
 //*****************************
 void buildtreeInput(FILE *fp, Trie t)
 {
-    char word[50];
-    cin >> word;
-    while (word)
+    char str1[100];
+    char newString[10][10]; 
+    int i,j,ctr;
+    fgets(str1, sizeof str1, stdin);	
+    j=0; ctr=0;
+    for(i=0;i<=(strlen(str1));i++)
     {
-        wordToLower(word, strlen(word));// make him lower
-        word[strlen(word)] = '\0';
-        inserta(t, word); //insert then i can free it .
-        cin >> word;
+        // if space or NULL found, assign NULL into newString[ctr]
+        if(str1[i]==' '||str1[i]=='\0')
+        {
+            newString[ctr][j]='\0';
+            ctr++;  //for next word
+            j=0;    //for next word, init index to 0
+        }
+        else
+        {
+            newString[ctr][j]=str1[i];
+            j++;
+        }
     }
+    
+    for(i=0;i < ctr;i++){
+        inserta(t,newString[i]);
+    }
+
 }
 
 void buildtreeFile(FILE *fp, Trie t)

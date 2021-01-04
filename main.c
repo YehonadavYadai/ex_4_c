@@ -3,9 +3,6 @@
 #include <string.h>
 #include "mylib.h"
 
-
-
-
 int main ()
 {
 Trie t;
