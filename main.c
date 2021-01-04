@@ -16,7 +16,7 @@ buildtree(fptr,t);
 // now i print the tree.
 for (int i = 0; i < 26; i++)
 {
-    Printup(t.children[i]):
+    Printup(t.children[i]);
 }
 
 
