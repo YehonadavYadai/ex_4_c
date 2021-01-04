@@ -70,7 +70,7 @@ void buildtreeInput(FILE *fp, Trie t)
     {
         wordToLower(word, strlen(word));// make him lower
         word[strlen(word)] = '\0';
-        insert(t, word); //insert then i can free it .
+        inserta(t, word); //insert then i can free it .
         cin >> word;
     }
 }
@@ -125,6 +125,7 @@ void inserta(Trie t, char *word)
     }
     // we ended the word.
     *ptr->count++;
+}
 
 
 
@@ -165,21 +166,26 @@ void inserta(Trie t, char *word)
     ///*********************************
     void Printup(node current)
     { //i got node.
+    
         if (current.dad == FALSE)
         { // if its end i guess its end of word.
             printf(" %s   %d", z, current.count);
         }
         //shold keep in the this path
         else
-        {
+        {// if this end of word print and pass to his children.
             if (current.count = !0)
             {
                 printf(" %s   %d", z, current.count);
-            } // check if this node is end of word
+            } 
+
             for (int i = 0; i < 26; i++)
             {
-                if (current.children[i]->open == TRUE)
-                    Printup(current.children[i]);
+               if (current.children[i]=!NULL)
+               { 
+                   Printup(current.children[i]);
+               }
+                  
             }
         }
     }
