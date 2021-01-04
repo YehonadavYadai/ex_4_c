@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "treelib.c"
-#include "printlib.c"
-#include "scan.c"
+#include "mylib.h"
+
+
+
 
 int main ()
 {
