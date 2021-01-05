@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include<iostream>
-using namespace std;
+
 #define NUM_LETTERS ((int)26)
 
 typedef enum
@@ -13,11 +12,17 @@ typedef enum
 
 typedef struct node
 {
-    boolean open = FALSE;
-    boolean dad = FALSE;
+    boolean open ;
+    boolean dad ;
     char *word;
     long unsigned int count;
     struct node *children[NUM_LETTERS]; // evrey node have array of nodes "children"
+    node()
+    {
+        open=FALSE;
+        dad=FALSE;
+        count=0;
+    }
 } node;
 
 typedef struct Trie
@@ -80,8 +85,11 @@ void buildtreeInput(FILE *fp, Trie t)
         }
         else
         {
-            newString[ctr][j]=str1[i];
+             if(isalpha(str1[i])){
+                
+            newString[ctr][j]=tolower(str1[i]);
             j++;
+             }
         }
     }
     
@@ -114,7 +122,7 @@ void inserta(Trie t, char *word)
 {
     node *ptr;
     int index = convert(word[0]);
-    if (t.children[index] == null)
+    if (t.children[index] == NULL)
     {
         node newNode;
         t.children[index] = newNode;

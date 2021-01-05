@@ -2,6 +2,16 @@ MAIN_O=main.o
 OTHER_O=mylib.o
 C=gcc -g
 
+
+
+do:maintest.c
+	$(C) maintest.c
+run:do a.out
+	./a.out
+
+
+
+	
 all:final
 final:$(MAIN_O) mylib.so    
 	$(C) $(MAIN_O) ./mylib.so -o $@

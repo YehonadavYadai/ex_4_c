@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "mylib.h"
+#define NUM_LETTERS ((int)26)
 
 int main ()
 {
