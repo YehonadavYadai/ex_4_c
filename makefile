@@ -4,8 +4,8 @@ C=gcc -g
 
 
 
-do:maintest.c
-	$(C) maintest.c
+do:main.c
+	$(C) main.c
 run:do a.out
 	./a.out<input.txt
 

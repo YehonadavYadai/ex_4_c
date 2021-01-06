@@ -1,28 +1,13 @@
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
-#include "mylib.h"
-#define NUM_LETTERS ((int)26)
+#include "mylib.c"
 
-int main ()
+int main()
 {
-Trie t;
-FILE *fptr=fopen("input.txt","r");
-buildtreeInput(fptr,t);
-// done building tree.
-
-// now i print the tree.
-for (int i = 0; i < 26; i++)
-{
-    if (t.children[i]=!NULL){// if there a child.
-    Printup(t.children[i]);
-    }
+     
+    Trie* t = (Trie *)malloc(sizeof(Trie));
+    t->children = (node *)malloc(sizeof(node) * NUM_LETTERS);
+    buildtreeInput(t);
+    printcheck(t);
+    //printR(t);
+     FreeTrie(t);
+    return 0 ;
 }
-
-
-return 0;
-}
-
-
-
-
