@@ -5,8 +5,7 @@
 #include <ctype.h>
 #define NUM_LETTERS ((int)26)
 
-
-int num=0;
+int num = 0;
 typedef enum
 {
     FALSE = 0,
@@ -75,7 +74,7 @@ void testreadword(Trie *t, char *word)
             // printf("the word in the tree\n");
             // printf("%s\n", (ptr->children + index)->word); //insert word
             ptr = ptr->children + index;
-            ptr->open=TRUE;
+            ptr->open = TRUE;
         }
         else
         {
@@ -90,13 +89,45 @@ void testreadword(Trie *t, char *word)
     }
     // it cound how many times the word in the tree
 }
+// char * getline(void) {
+//     char * line = malloc(100), * linep = line;
+//     size_t lenmax = 100, len = lenmax;
+//     int c;
+
+//     if(line == NULL)
+//         return NULL;
+
+//     for(;;) {
+//         c = fgetc(stdin);
+//         if(c == EOF)
+//             break;
+
+//         if(--len == 0) {
+//             len = lenmax;
+//             char * linen = realloc(linep, lenmax *= 2);
+
+//             if(linen == NULL) {
+//                 free(linep);
+//                 return NULL;
+//             }
+//             line = linen + (line - linep);
+//             linep = linen;
+//         }
+
+//         if((*line++ = c) == '\n')
+//             break;
+//     }
+//     *line = '\0';
+//     return linep;
+// }
 
 void buildtreeInput(Trie *t)
 {
     char str1[300];
     char newString[30][10];
     int i, j, ctr;
-    fgets(str1, sizeof str1, stdin);
+    while( fgets(str1, sizeof str1, stdin)) {
+    //fgets(str1, sizeof str1, stdin);
     j = 0;
     ctr = 0;
     for (i = 0; i <= (strlen(str1)); i++)
@@ -121,32 +152,33 @@ void buildtreeInput(Trie *t)
 
     for (i = 0; i < ctr; i++)
     {
-        printf("the word been insered is :%s \n", newString[i]);
+        //printf("the word been insered is :%s \n", newString[i]);
         testreadword(t, newString[i]);
+    }
     }
 }
 void printNode(node *node)
 { //evry node that comes in here is open.
- 
- int z = node->count;
-if(z>0){
-    num++;
-        printf(" word : %s  count: %d \n",node->word, z);
-       
-}
 
-if(node->dad==TRUE){//if he have a sun start to check.
+    int z = node->count;
+    if (z > 0)
+    {
+        num++;
+        printf("%s  %d \n", node->word, z);
+    }
 
-for (int i = 0; i < 26; i++)
- {
-        if (((node->children) + i)->open == TRUE)
-        { //if there is a path
+    if (node->dad == TRUE)
+    { //if he have a sun start to check.
 
-            printNode(((node->children) + i));
-            
+        for (int i = 0; i < 26; i++)
+        {
+            if (((node->children) + i)->open == TRUE)
+            { //if there is a path
+
+                printNode(((node->children) + i));
+            }
         }
- }
-}
+    }
 }
 
 //printf("this is the second word %s \n",t->children->children->word);
@@ -163,21 +195,38 @@ void printcheck(Trie *t)
     }
 }
 
-void printup(Trie *t)
-{
-    printf("i got inti print");
-    for (int i = 0; i < 26; i++)
-    {
-        node *ptr = t->children;
-        printf("%ld", ptr->count);
+void printNodeR(node *node)
+{ //evry node that comes in here is open.
 
-        if (ptr->open == TRUE)
+    if (node->dad == TRUE)
+    { //if he have a sun start to check.
+
+        for (int i = 0; i < 26; i++)
         {
+            if (((node->children) + i)->open == TRUE)
+            { //if there is a path
 
-            //        //if this letter is open print all his words
-            //        printnode((t->children+index));
-            ptr = ptr + 1;
+                printNodeR(((node->children) + i));
+               
+            }
+        }
+    }
+     int z = node->count;
+                if (z > 0)
+                {
+                    num++;
+                    printf("%s  %d \n", node->word, z);
+                }
+}
+
+void printR(Trie *t)
+{
+    for (int i = 25; i > -1; i--)
+    {
+
+        if (((t->children) + i)->open == TRUE)
+        {
+            printNodeR(((t->children) + i));
         }
     }
 }
-

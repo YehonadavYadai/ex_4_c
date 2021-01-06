@@ -7,7 +7,7 @@ C=gcc -g
 do:maintest.c
 	$(C) maintest.c
 run:do a.out
-	./a.out
+	./a.out<input.txt
 
 
 
