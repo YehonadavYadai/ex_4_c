@@ -3,7 +3,7 @@ OTHER_O=mylib.o
 C=gcc -g
 
 
-run:do frequency 
+all:do frequency 
 	./frequency<input.txt
 do:main.c
 	$(C) main.c -o frequency
