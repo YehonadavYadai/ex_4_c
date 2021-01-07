@@ -28,98 +28,104 @@ typedef struct Trie
     struct node *children;
 } Trie;
 
- void init(char* word, node* current, int size)
- {
-     current->open = TRUE;
-     current->children = (node*)malloc(sizeof(node) * NUM_LETTERS); //malloc for his suns
-     current->word = (char *)malloc(sizeof(char)*20);                     //malloc for new nodee "word"
-     strncpy(current->word, word, size+1);
-     // printf("the word in the tree :%s \n", current->word);
-
-    
- }
-void insertWord(Trie *t, char *word)
+void init(char *word, node *current)
 {
-    
-    int len = strlen(word);
-    node *ptr=t->children;
-    int index = *word - 'a'; // index of char in the array
-    if ((ptr+index)->open == FALSE)
-    {
-        init(word,ptr + index,0);
-    }  
-    ptr = ptr + index; //already mallocated.
-    
+    current->open = TRUE;
+    current->children = (node *)malloc(sizeof(node) * NUM_LETTERS); //malloc for his suns
+              //malloc for new nodee "word"
+}
+int insertWord(Trie *t, char *word)
+{
 
-    for (int i = 1; i < len+1; i++)
+    int len = strlen(word);
+    node *ptr = t->children;
+    int index = *word - 'a'; // index of char in the array
+    if ((ptr + index)->open == FALSE)
     {
-        char c=*(word+i);
-        index=c-'a';
+        init(word, ptr + index);
+    }
+    ptr = ptr + index; //already mallocated.
+    if (len==1){
+         ptr->word = (char *)malloc(sizeof(char) * 11); 
+            strncpy(ptr->word, word,  1);
+    return 0;
+    }
+    for (int i = 1; i < len + 1; i++)
+    {
+        char c = *(word + i);
+        index = c - 'a';
         ptr->dad = TRUE; // if you here it mean you have children.
-        ptr=(ptr->children) + index;
+        ptr = (ptr->children) + index;
         if (ptr->open == FALSE)
         {
-            init(word,ptr,i);
-        } 
+            init(word, ptr);
+        }
 
-        if (i==len-1) {
+        if (i == len - 1)
+        {
             (ptr->count)++;
-        } 
+            ptr->word = (char *)malloc(sizeof(char) * i+1); 
+            strncpy(ptr->word, word, i + 1);
+        }
     }
-    
+return 0;
     //printf("the word in the tree :%s \n", ptr->word);
     ///printf("length of word is %d \n",len);
-    
 }
 
-void buildtreeInput(Trie *t)
+
+void testbuild(Trie *t)
 {
-    char *str1 = (char *)malloc(sizeof(char) * 300);
-    char newString[30][20];
-    int i, j, ctr;
-    while (fgets(str1, 300, stdin))
-    {
-        j = 0;
-        ctr = 0;
-        for (i = 0; i <= (strlen(str1)); i++)
-        {
-            // if space or NULL found, assign NULL into newString[ctr]
-            if (str1[i] == ' ' || str1[i] == '\0')
-            {
-                newString[ctr][j] = '\0';
-                ctr++; //for next word
-                j = 0; //for next word, init index to 0
-            }
-            else
-            {
-                if (isalpha(str1[i]))
-                {
+    int spaces=0;
+    int i = 1;
+    char *pStr = (char *)malloc(sizeof(char) * 1);
+    char c;
+ printf(" %s", "");
+    size_t len = 0;
+    char *str = malloc(sizeof(char) * 1);
+    while (scanf("%c", &c) == 1)
+    { // start a word
 
-                    newString[ctr][j] = tolower(str1[i]);
-                    j++;
-                }
-            }
+        
+        //printf("your letter is : %c\n", c);
+
+        if (c == ' ' || c == '\n'||c=='\0')
+        { //if we finish the word
+            
+            // if the last leeter was "no space"
+            insertWord(t, str);
+            len = 0;
+            free(str);
+            char *str = malloc(sizeof(char) * 1);
+            spaces=1;
         }
+        else
 
-        for (i = 0; i < ctr; i++)
-        {
-            printf("the word been insert to the tree is :%s \n", newString[i]);
-            insertWord(t, newString[i]);
+        { //keep write
+        if (isalpha(c)){
+            str[len] = c;
+            len++;
+            str = realloc(str, sizeof(char) * 1);}
+     
         }
     }
-    free(str1);
+
+    
+    insertWord(t, str);
+    free(str);
 }
+
+
 
 //////////////////// print
 void printNode(node *node)
 { //evry node that comes in here is open.
 
-    
-    //printf("%s  %d \n", node->word, z);
     if (node->count > 0)
     {
         num++;
-        printf("%s  %ld \n", node->word, node->count);
+        printf(" %s", "");
+        printf(" %s  %ld  \n ", node->word, node->count);
     }
 
     if (node->dad == TRUE)
@@ -139,20 +145,16 @@ void printNode(node *node)
 //printf("this is the second word %s \n",t->children->children->word);
 void printcheck(Trie *t)
 {
-node* ptr=t->children;
+   
+    node *ptr = t->children;
     for (int i = 0; i < NUM_LETTERS; i++)
     {
-        if ((ptr+i)->open == TRUE)
+        if ((ptr + i)->open == TRUE)
         {
-            printNode(ptr+i);
+            printNode(ptr + i);
         }
     }
 }
-
-
-
-
-
 
 void printNodeR(node *node)
 { //evry node that comes in here is open.
@@ -160,8 +162,8 @@ void printNodeR(node *node)
     if (node->dad == TRUE)
     { //if he have a sun start to check.
 
-        for (int i = 0; i < NUM_LETTERS; i++)
-        {
+        for (int i = 25; i > -1; i--)
+    {
             if (((node->children) + i)->open == TRUE)
             { //if there is a path
 
@@ -173,13 +175,13 @@ void printNodeR(node *node)
     if (z > 0)
     {
         num++;
-        printf("%s  %d \n", node->word, z);
+        printf(" %s  %d \n ", node->word, z);
     }
 }
 
 void printR(Trie *t)
 {
-   
+
     for (int i = 25; i > -1; i--)
     {
 
@@ -190,11 +192,9 @@ void printR(Trie *t)
     }
 }
 
-
 /////////////////FREE FREE FREE///////////////
 void FreeNode(node *node)
 { //evry node that comes in here is open.
-
 
     if (node->dad == TRUE)
     { //if he have a sun start to check.
@@ -211,22 +211,19 @@ void FreeNode(node *node)
     //printf("node : %s is free\n",node->word);
     free(node->word);
     free(node->children);
-    
-    
 }
 
 //printf("this is the second word %s \n",t->children->children->word);
 void FreeTrie(Trie *t)
 {
-node* ptr=t->children;
+    node *ptr = t->children;
     for (int i = 0; i < NUM_LETTERS; i++)
     {
-        if ((ptr+i)->open == TRUE)
+        if ((ptr + i)->open == TRUE)
         {
-            FreeNode(ptr+i);
+            FreeNode(ptr + i);
         }
     }
     free(t->children);
     free(t);
 }
-
