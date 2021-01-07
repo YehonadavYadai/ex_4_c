@@ -3,26 +3,11 @@ OTHER_O=mylib.o
 C=gcc -g
 
 
-
+run:do frequency 
+	./frequency<input.txt
 do:main.c
-	$(C) main.c
-run:do a.out
-	./a.out<input.txt
-
-
-
-	
-all:final
-final:$(MAIN_O) mylib.so    
-	$(C) $(MAIN_O) ./mylib.so -o $@
-mylib.so:$(OTHER_O)
-	$(C) -shared $^ -o $@
-MAIN_O:main.c mylib.h 
-	$(C) -c main.c
-OTHER_O: mylib.c mylib.h
-	$(C) -c mylib.c
-
+	$(C) main.c -o frequency
 .PHONY:clean all
     
 clean:
-	rm *.o *.so final
+	rm *.o  

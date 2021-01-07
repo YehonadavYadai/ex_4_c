@@ -1,4 +1,14 @@
-it was the best of times, it was the worst of times.
-it was the age of wisdom, it was the age of foolishness.
-While running some commands during the core-dump situation you may encounter with “Unable to open lock file” this is because the system is trying to capture a bit block which is not existing, This is due to the crashing of binaries of some specific programs.
-You may do backtracking or debugging to resolve it but the solution is to repair the broken packages and we can do it by performing the below-mentioned steps:
+a
+ a  a 
+  a
+
+
+
+
+
+
+
+
+
+
+
