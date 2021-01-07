@@ -119,7 +119,7 @@ void BuildTree(Trie *t)
     }
 
     if(len>0){
-    printf("%s"," ");
+    
     InsertWord(t, str);
     free(str);}
 }

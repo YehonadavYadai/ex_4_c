@@ -3,7 +3,7 @@
 int main(int argc, char *argcv[])
 {
 
-   
+   printf("%s","\n");
     Trie* t = (Trie *)malloc(sizeof(Trie));
     t->children = (node *)malloc(sizeof(node) * NUM_LETTERS);
     BuildTree(t);
