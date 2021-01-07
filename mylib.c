@@ -54,6 +54,7 @@ int InsertWord(Trie *t, char *word)
             ptr->count++;
     return 0;
     }
+
     for (int i = 1; i < len + 1; i++)
     {
         char c = *(word + i);
@@ -68,7 +69,7 @@ int InsertWord(Trie *t, char *word)
         if (i == len - 1)
         {
             (ptr->count)++;
-            ptr->word = (char *)malloc(sizeof(char) * i+1); 
+            ptr->word = (char *)malloc(sizeof(char) * len+1); 
             strncpy(ptr->word, word, i + 1);
         }
     }
@@ -118,6 +119,7 @@ void BuildTree(Trie *t)
     }
 
     if(len>0){
+    printf("%s"," ");
     InsertWord(t, str);
     free(str);}
 }
