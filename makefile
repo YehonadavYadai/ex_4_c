@@ -3,8 +3,8 @@ OTHER_O=mylib.o
 C=gcc -g
 
 
-all:do frequency 
-	./frequency<input.txt
+all:do 
+	
 do:main.c
 	$(C) main.c -o frequency
 .PHONY:clean all
