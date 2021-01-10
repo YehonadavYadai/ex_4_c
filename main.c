@@ -35,6 +35,7 @@ void initCurrentNode(char *word, node *current)
     current->children = (node *)malloc(sizeof(node) * NUM_LETTERS); //malloc for his suns
               //malloc for new nodee "word"
 }
+//this method take a word and insert into the tree.
 int InsertWord(Trie *t, char *word)
 {
 
@@ -79,7 +80,7 @@ return 0;
     ///printf("length of word is %d \n",len);
 }
 
-
+//this method get the word from the input and inserting all of the word in thr tree
 void BuildTree(Trie *t)
 {
     int spaces=0;
@@ -97,7 +98,8 @@ void BuildTree(Trie *t)
         if (c == ' ' || c == '\n'||c=='\0')
         { //if we finish the word
             
-            // if the last leeter was "no space"
+            //only of the last letter was alpha then insert.
+            //if the last letter was space its not a word
             if (len>0){
             InsertWord(t, str);
             len = 0;
@@ -105,6 +107,7 @@ void BuildTree(Trie *t)
             char *str = malloc(sizeof(char) * 1);
             spaces=1;
             }
+            
         }
 
         else
@@ -135,7 +138,7 @@ void PrintNodeS(node *node)
     {
         num++;
         
-        printf("%s\t%ld\n", node->word, node->count);
+        printf("%s %ld\n", node->word, node->count);
     }
 
     if (node->dad == TRUE)
@@ -185,7 +188,7 @@ void PrintNodeR(node *node)
     if (node->count > 0)
     {
         num++;
-        printf("%s\t%ld\n", node->word, node->count);
+        printf("%s %ld\n", node->word, node->count);
         
     }
 }
@@ -250,7 +253,6 @@ int main(int argc, char *argcv[])
      PrintS(t);}
   else if(*argcv[1]=='r'){
     printR(t);}
-
     FreeTrie(t);
      
    

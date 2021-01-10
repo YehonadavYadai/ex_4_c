@@ -3,9 +3,9 @@ OTHER_O=mylib.o
 C=gcc -g
 
 
-all:do 
+all:frequency 
 	
-do:main.c
+frequency:main.c
 	$(C) main.c -o frequency
 .PHONY:clean all
     
