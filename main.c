@@ -246,9 +246,9 @@ if (node->dad == 1){
         printf("%s %ld\n", node->word, node->count);
         
         free(node->word);
-        free(node);
+       
     }
-
+ free(node);
     
     
 }
@@ -355,7 +355,7 @@ int main(int argc, char *argcv[])
     //printR(t);}
     //   }
     //FreeTrie(t);
-    PrintS(t);
+    PrintR(t);
     
     
 
