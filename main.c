@@ -5,11 +5,11 @@
 #include <ctype.h>
 #define NUM_LETTERS ((int)26)
 #define SIZE 2
-int inputfree = 0;
-int wordmalloc = 0;
-int numMalloc = 0;
-int freenum = 0;
-int num = 0;
+
+
+
+
+
 typedef enum
 {
     FALSE = 0,
@@ -34,32 +34,29 @@ typedef struct Trie
     int check[26];
 } Trie;
 
-// void initCurrentNode(char *word, node *current)
-// {
-//     current=(node*)malloc(sizeof(node));// give e a space of 1 node.
-//     current->open = TRUE;
-//     //current->children = (node *)malloc(sizeof(node) * NUM_LETTERS); //malloc for his suns
-//               //malloc for new nodee "word"
-// }
+
 //this method take a word and insert into the tree.
 int InsertWord(Trie *t, char *word)
-{
 
+
+{
+printf(" i was inserted: %s \n",word);
     int len = strlen(word);
-    //node *ptr = t->children;//its get the right pointer
+    
     int index = *word - 'a'; // index of char in the array
-    //ptr = ptr + index;
+    
 
     // check if he need to malloc
     if (t->check[index] == 0)
     {
-        printf("im here once");
-
+      
+        //"mark" sun.
         t->check[index] = 1;
-        //initCurrentNode(word, t->children[index]);
+        //malloc for first sun
         t->children[index] = (node *)malloc(sizeof(node));
-        //numMalloc++;
+        //another "mark"
         t->children[index]->open = TRUE;
+        //set without child as start.
         t->children[index]->dad = 0;
        
     }
@@ -70,33 +67,35 @@ int InsertWord(Trie *t, char *word)
         char c = *(word + i);
         index = c - 'a';
         ptr->dad = 1; // if you here it mean you have children.
-        //ptr = (ptr->children) + index;
+        
 
         if (ptr->check[index] == 0) //if sun not exit create him
         {
-
+            //"mark" sun .
             ptr->check[index] = 1;
 
-            //initCurrentNode(word, ptr);
+            //malloc sun
             ptr->children[index] = (node *)malloc(sizeof(node));
-            //numMalloc++;
+            //another "mark" for sun
             ptr->children[index]->open = TRUE;
+            //set "no dad" in init.
             ptr->children[index]->dad = 0;
            
         }
-
-        ptr = ptr->children[index]; //moving to the sun.
+        //moving to the sun.    
+        ptr = ptr->children[index]; 
 
         if ((i == len - 1) && (isalpha(c))) //if we in the end of the Word ,copy the word.
         {
-
+            //count the word in her node.
             ptr->count++;
 
+            //if its first time of word we will allocte space for her
             if (ptr->count == 1)
             {
-
+                // alloc and copy.
                 ptr->word = (char *)malloc(sizeof(char) * len + SIZE);
-                //numMalloc++;
+                
                 strncpy(ptr->word, word, i + 1);
             }
             
@@ -109,47 +108,60 @@ int InsertWord(Trie *t, char *word)
 //this method get the word from the input and inserting all of the word in thr tree
 void BuildTree(Trie *t)
 {
-    char* str2;
-    int spaces = 0;
+   
+    
     int i = 1;
     char c;
     size_t len = 0;
-    char *str = malloc(sizeof(char) * 2);
-    numMalloc++;
-    while (scanf("%c", &c) == 1)
-    { // start a word
 
-        //printf("your letter is : %c\n", c);
+    //alocte for first char.
+
+    char *str = malloc(sizeof(char) * 2);
+    
+
+    // while there is stiil input 
+    while (scanf("%c", &c) == 1)
+    { 
+
+        //if we finish the word
         if (c == ' ' || c == '\n' || c == '\0')
-        { //if we finish the word
-            //only of the last letter was alpha then insert.
-            //if the last letter was space its not a word
+        { 
+            
+            //if its real word and not bunch of "spaces"
             if (len > 0)
             {
+                //insert and copy in the tree
                 InsertWord(t, str);
-                //printf("word inserted is : %s \n", str);
+                
+                //you can free the word 
                 free(str);
+                // aloocate to start next word.
                 str=(char*)malloc(sizeof(char));
-                inputfree++;
+
+                // set lenght of word to zero
                 len = 0;
-                numMalloc++;
-                spaces = 1;
+                
+                
             }
         }
-
+        //middle of the word, keep write
         else
         { //keep write
+
             if (isalpha(c))
             {
+                //alocte only if is a char.
                 str=(char *)realloc(str, sizeof(char)*len+1);
 
-                //str = realloc(str, sizeof(char) * (len + 1));
+                // make the char lower
                 c = tolower(c);
+                //put it in the word.
                 str[len] = c;
                 len++;
             }
         }
     }
+
 
     if (len > 0)
     {
@@ -157,9 +169,10 @@ void BuildTree(Trie *t)
         InsertWord(t, str);
         printf("word inserted is : %s \n", str);
         free(str);
-        inputfree++;
+        
     }
-    free(str);
+
+    //free(str);
 }
 
 //////////////////// print
@@ -172,7 +185,7 @@ int was=0;
         printf("%s %ld\n", node->word, node->count);
         was=1;
         free(node->word);
-        freenum++;
+        
     }
 
     if (node->dad == 1)
@@ -193,7 +206,7 @@ int was=0;
         }
     }
     free(node);
-    freenum++;
+    
 }
 
 //printf("this is the second word %s \n",t->children->children->word);
@@ -210,9 +223,52 @@ void PrintS(Trie *t)
         }
     }
     free(t);
-    freenum++;
+    
 }
 
+void PrintNodeR(node *node)
+{ //evry node that comes in here is open.
+if (node->dad == 1){
+ for (int i = 25; i > -1; i--)
+        {
+            
+            if (node->check[i] == 1)
+            { //if there is a path
+
+                PrintNodeS(node->children[i]);
+            }
+        }
+    }
+
+    if (node->count > 0)
+    {
+
+        printf("%s %ld\n", node->word, node->count);
+        
+        free(node->word);
+        free(node);
+    }
+
+    
+    
+}
+
+//printf("this is the second word %s \n",t->children->children->word);
+void PrintR(Trie *t)
+{
+
+    for (int i = 25; i > -1; i--)
+    {
+
+        if (t->check[i] == 1)
+        {
+
+            PrintNodeS(t->children[i]);
+        }
+    }
+    free(t);
+    
+}
 // void PrintNodeR(node *node)
 // { //evry node that comes in here is open.
 
@@ -300,8 +356,8 @@ int main(int argc, char *argcv[])
     //   }
     //FreeTrie(t);
     PrintS(t);
-    printf("num of malloc is : %d \n", numMalloc);
-    printf("num of free is %d \n", inputfree);
+    
+    
 
     return 0;
 }
