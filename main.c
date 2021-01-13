@@ -235,7 +235,7 @@ if (node->dad == 1){
             if (node->check[i] == 1)
             { //if there is a path
 
-                PrintNodeS(node->children[i]);
+                PrintNodeR(node->children[i]);
             }
         }
     }
@@ -263,7 +263,7 @@ void PrintR(Trie *t)
         if (t->check[i] == 1)
         {
 
-            PrintNodeS(t->children[i]);
+            PrintNodeR(t->children[i]);
         }
     }
     free(t);
@@ -355,7 +355,7 @@ int main(int argc, char *argcv[])
     //printR(t);}
     //   }
     //FreeTrie(t);
-    PrintS(t);
+    PrintR(t);
     
     
 
