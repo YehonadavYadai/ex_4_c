@@ -286,7 +286,7 @@ void PrintR(Trie *t)
 int main(int argc, char *argcv[])
 {
 
-    printf("%s", "\n");
+    //printf("%s", "\n");
     Trie *t = (Trie *)malloc(sizeof(Trie));
      if (t == NULL)
         {
