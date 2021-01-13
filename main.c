@@ -172,7 +172,7 @@ void BuildTree(Trie *t)
         
     }
 
-    //free(str);
+    free(str);
 }
 
 //////////////////// print
@@ -355,7 +355,7 @@ int main(int argc, char *argcv[])
     //printR(t);}
     //   }
     //FreeTrie(t);
-    PrintR(t);
+    PrintS(t);
     
     
 
